@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -68,10 +67,11 @@ public class ChatView extends RelativeLayout {
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
     private Context context;
+    private String senderName = "";
+    private String receiverName = "";
 
 
-
-     ChatView(Context context) {
+    ChatView(Context context) {
         this(context, null);
     }
 
@@ -113,6 +113,11 @@ public class ChatView extends RelativeLayout {
         getAttributesForSendButton();
         getUseEditorAction();
         attributes.recycle();
+    }
+
+    public void setParticipants(String senderName, String receiverName) {
+        this.senderName = senderName;
+        this.receiverName = receiverName;
     }
 
     private void setListAdapter() {
@@ -446,12 +451,9 @@ public class ChatView extends RelativeLayout {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
+            holder.getUsernameTextView().setText(type == STATUS_SENT ? senderName : receiverName);
             holder.getMessageTextView().setText(chatMessages.get(position).getMessage());
             holder.getTimestampTextView().setText(chatMessages.get(position).getFormattedTime());
-            holder.getChatBubble().setCardElevation(bubbleElevation);
-            holder.setBackground(type);
-
             return convertView;
         }
 
@@ -467,13 +469,12 @@ public class ChatView extends RelativeLayout {
 
         class ViewHolder {
             View row;
-            CardView bubble;
+            TextView usernameTextView;
             TextView messageTextView;
             TextView timestampTextView;
 
             private ViewHolder(View convertView) {
                 row = convertView;
-                bubble = (CardView) convertView.findViewById(R.id.bubble);
             }
 
             private TextView getMessageTextView() {
@@ -483,37 +484,20 @@ public class ChatView extends RelativeLayout {
                 return messageTextView;
             }
 
+            private TextView getUsernameTextView() {
+                if (usernameTextView == null) {
+                    usernameTextView = (TextView) row.findViewById(R.id.username_text_view);
+                }
+                return usernameTextView;
+            }
+
             private TextView getTimestampTextView() {
                 if (timestampTextView == null) {
                     timestampTextView = (TextView) row.findViewById(R.id.timestamp_text_view);
                 }
-
                 return timestampTextView;
             }
 
-            private CardView getChatBubble() {
-                if (bubble == null) {
-                    bubble = (CardView) row.findViewById(R.id.bubble);
-                }
-
-                return bubble;
-            }
-
-            private void setBackground(int messageType) {
-
-                int background = ContextCompat.getColor(context, R.color.cardview_light_background);
-
-                switch (messageType) {
-                    case STATUS_RECEIVED:
-                        background = bubbleBackgroundRcv;
-                        break;
-                    case STATUS_SENT:
-                        background = bubbleBackgroundSend;
-                        break;
-                }
-
-                bubble.setCardBackgroundColor(background);
-            }
         }
     }
 }

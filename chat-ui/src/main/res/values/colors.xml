@@ -2,7 +2,7 @@
 <resources>
     <color name="blue">#4099FF</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+    <color name="black">#880c1b0c</color>
     <color name="sinch_purple">#63029d</color>
     <color name="sinch_purple_darker">#ff380258</color>
     <color name="off_white">#fffafafa</color>
@@ -17,12 +17,12 @@
     <color name="facebook_blue">#3B5998</color>
     <color name="main_color_gray">#7d7d7d</color>
 
-    <color name="default_bubble_color_rcv">@color/black</color>
-    <color name="default_bubble_color_send">@color/white</color>
+    <color name="default_bubble_color_rcv">#ffE3E5E6</color>
+    <color name="default_bubble_color_send">#ff008000</color>
 
     <color name="default_tstamp_color_rcv">@color/off_white</color>
     <color name="default_tstamp_color_send">@color/main_color_gray</color>
 
-    <color name="default_message_color_rcv">@color/white</color>
-    <color name="default_message_color_send">@color/black</color>
+    <color name="default_message_color_rcv">@color/black</color>
+    <color name="default_message_color_send">@color/white</color>
 </resources>
