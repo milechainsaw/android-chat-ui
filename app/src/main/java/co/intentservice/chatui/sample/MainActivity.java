@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-chatView.setParticipants("Milenko", "NekiNebitanLik");
+chatView.setParticipants("Mike Nickname", "Steve Lastname");
         chatView.setTypingListener(new ChatView.TypingListener() {
             @Override
             public void userStartedTyping() {

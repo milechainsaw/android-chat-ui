@@ -2,7 +2,6 @@ package co.intentservice.chatui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -57,11 +56,6 @@ public class ChatView extends RelativeLayout {
 
     private int backgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
-    private int sendButtonBackgroundTint, sendButtonIconTint;
-
-    private float bubbleElevation;
-
-    private int bubbleBackgroundRcv, bubbleBackgroundSend; // Drawables cause cardRadius issues. Better to use background color
     private Drawable sendButtonIcon, buttonDrawable;
     private TypedArray attributes, textAppearanceAttributes;
     private Context context;
@@ -143,10 +137,6 @@ public class ChatView extends RelativeLayout {
 
         float dip4 = context.getResources().getDisplayMetrics().density * 4.0f;
         int elevation = attributes.getInt(R.styleable.ChatView_bubbleElevation, ELEVATED);
-        bubbleElevation = elevation == ELEVATED ? dip4 : 0;
-
-        bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
-        bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
     }
 
     private void setChatViewBackground() {
@@ -177,8 +167,6 @@ public class ChatView extends RelativeLayout {
     }
 
     private void getAttributesForSendButton() {
-        sendButtonBackgroundTint = attributes.getColor(R.styleable.ChatView_sendBtnBackgroundTint, -1);
-        sendButtonIconTint = attributes.getColor(R.styleable.ChatView_sendBtnIconTint, Color.WHITE);
         sendButtonIcon = attributes.getDrawable(R.styleable.ChatView_sendBtnIcon);
     }
 
