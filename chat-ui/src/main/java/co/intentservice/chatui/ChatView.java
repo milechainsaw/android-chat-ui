@@ -115,6 +115,12 @@ public class ChatView extends RelativeLayout {
         attributes.recycle();
     }
 
+    /**
+     * Names of users participating in the chat.
+     *
+     * @param senderName
+     * @param receiverName
+     */
     public void setParticipants(String senderName, String receiverName) {
         this.senderName = senderName;
         this.receiverName = receiverName;
