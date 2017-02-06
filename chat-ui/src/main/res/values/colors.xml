@@ -16,6 +16,7 @@
     <color name="faint_real_name">#999999</color>
     <color name="facebook_blue">#3B5998</color>
     <color name="main_color_gray">#7d7d7d</color>
+    <color name="main_color_light_gray">#ffE3E5E6</color>
 
     <color name="default_bubble_color_rcv">#ffE3E5E6</color>
     <color name="default_bubble_color_send">#ff008000</color>

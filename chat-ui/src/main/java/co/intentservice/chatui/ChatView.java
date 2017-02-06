@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -19,13 +18,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import co.intentservice.chatui.fab.FloatingActionsMenu;
 import co.intentservice.chatui.models.ChatMessage;
 import co.intentservice.chatui.models.ChatMessage.Type;
 
@@ -37,11 +36,10 @@ public class ChatView extends RelativeLayout {
     private static final int FLAT = 0;
     private static final int ELEVATED = 1;
 
-    private CardView inputFrame;
     private ListView chatListView;
     private EditText inputEditText;
 
-    private FloatingActionsMenu actionsMenu;
+    private ImageButton sendButton;
     private boolean previousFocusState = false, useEditorAction, isTyping;
 
     private Runnable typingTimerRunnable = new Runnable() {
@@ -57,7 +55,7 @@ public class ChatView extends RelativeLayout {
     private OnSentMessageListener onSentMessageListener;
     private ChatViewListAdapter chatViewListAdapter;
 
-    private int inputFrameBackgroundColor, backgroundColor;
+    private int backgroundColor;
     private int inputTextSize, inputTextColor, inputHintColor;
     private int sendButtonBackgroundTint, sendButtonIconTint;
 
@@ -99,16 +97,14 @@ public class ChatView extends RelativeLayout {
 
     private void initializeViews() {
         chatListView = (ListView) findViewById(R.id.chat_list);
-        inputFrame = (CardView) findViewById(R.id.input_frame);
         inputEditText = (EditText) findViewById(R.id.input_edit_text);
-        actionsMenu = (FloatingActionsMenu) findViewById(R.id.sendButton);
+        sendButton = (ImageButton) findViewById(R.id.sendButton);
     }
 
     private void getXMLAttributes(AttributeSet attrs, int defStyleAttr) {
         attributes = context.obtainStyledAttributes(attrs, R.styleable.ChatView, defStyleAttr, R.style.ChatViewDefault);
         getChatViewBackgroundColor();
         getAttributesForBubbles();
-        getAttributesForInputFrame();
         getAttributesForInputText();
         getAttributesForSendButton();
         getUseEditorAction();
@@ -134,7 +130,6 @@ public class ChatView extends RelativeLayout {
 
     private void setViewAttributes() {
         setChatViewBackground();
-        setInputFrameAttributes();
         setInputTextAttributes();
         setSendButtonAttributes();
         setUseEditorAction();
@@ -152,15 +147,6 @@ public class ChatView extends RelativeLayout {
 
         bubbleBackgroundRcv = attributes.getColor(R.styleable.ChatView_bubbleBackgroundRcv, ContextCompat.getColor(context, R.color.default_bubble_color_rcv));
         bubbleBackgroundSend = attributes.getColor(R.styleable.ChatView_bubbleBackgroundSend, ContextCompat.getColor(context, R.color.default_bubble_color_send));
-    }
-
-
-    private void getAttributesForInputFrame() {
-        inputFrameBackgroundColor = attributes.getColor(R.styleable.ChatView_inputBackgroundColor, -1);
-    }
-
-    private void setInputFrameAttributes() {
-        inputFrame.setCardBackgroundColor(inputFrameBackgroundColor);
     }
 
     private void setChatViewBackground() {
@@ -197,11 +183,8 @@ public class ChatView extends RelativeLayout {
     }
 
     private void setSendButtonAttributes() {
-        actionsMenu.getSendButton().setColorNormal(sendButtonBackgroundTint);
-        actionsMenu.setIconDrawable(sendButtonIcon);
-
-        buttonDrawable = actionsMenu.getIconDrawable();
-        actionsMenu.setButtonIconTint(sendButtonIconTint);
+        sendButton.setImageDrawable(sendButtonIcon);
+        buttonDrawable = sendButton.getDrawable();
     }
 
     private void getUseEditorAction() {
@@ -272,30 +255,14 @@ public class ChatView extends RelativeLayout {
 
     private void setButtonClickListeners() {
 
-        actionsMenu.getSendButton().setOnClickListener(new OnClickListener() {
+        sendButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (actionsMenu.isExpanded()) {
-                    actionsMenu.collapse();
-                    return;
-                }
-
                 long stamp = System.currentTimeMillis();
                 String message = inputEditText.getText().toString();
                 if (!TextUtils.isEmpty(message)) {
-                    sendMessage(message, stamp);
+                    sendMessage(message.trim(), stamp);
                 }
-
-            }
-        });
-
-        actionsMenu.getSendButton().setOnLongClickListener(new OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-                actionsMenu.expand();
-                return true;
             }
         });
     }
@@ -380,8 +347,8 @@ public class ChatView extends RelativeLayout {
         return inputEditText;
     }
 
-    public FloatingActionsMenu getActionsMenu() {
-        return actionsMenu;
+    public ImageButton getSendButton() {
+        return sendButton;
     }
 
 

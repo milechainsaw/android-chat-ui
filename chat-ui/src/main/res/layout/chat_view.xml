@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,6 +8,7 @@
         android:id="@+id/chat_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:paddingBottom="96dp"
@@ -17,54 +16,55 @@
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" />
 
-    <co.intentservice.chatui.fab.FloatingActionsMenu
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        app:borderWidth="0dp"
-        tools:src="@drawable/ic_send_white_24dp">
-
-    </co.intentservice.chatui.fab.FloatingActionsMenu>
-
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:id="@+id/input_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_toLeftOf="@id/sendButton"
+        android:background="@color/white"
         android:descendantFocusability="beforeDescendants"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="1dp"
-        app:contentPadding="2dp">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_side_padding"
+        android:paddingRight="0dp">
 
         <EditText
             android:id="@+id/input_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:background="@null"
             android:hint="@string/default_input_hint"
             android:inputType="text"
             android:maxLines="5"
-            android:minHeight="48dp"
-            android:paddingBottom="4dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="4dp"
+            android:minHeight="52dp"
+            android:paddingBottom="@dimen/default_side_padding"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="@dimen/default_side_padding"
             android:textColor="@color/black"
             android:textColorHint="@color/main_color_gray"
             android:textSize="@dimen/default_input_text_size" />
 
-    </android.support.v7.widget.CardView>
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:adjustViewBounds="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:paddingLeft="@dimen/default_side_padding"
+            android:paddingRight="@dimen/default_side_padding"
+            android:scaleType="center"
+            android:src="@drawable/ic_send_white_24dp"
+            android:tint="@color/default_bubble_color_send" />
 
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/input_frame"
+        android:background="@color/main_color_light_gray" />
 </merge>
